@@ -1,5 +1,6 @@
 from bdb import Breakpoint
 from tkinter import*
+from tkinter import ttk
 from tkinter import filedialog
 import sqlite3
 import hashlib
@@ -98,6 +99,7 @@ red_FG = "#f44336"
 root.config(bg=BG)
 root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
 
+
 # Defining button images
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
 submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit Type 1 5%.png")
@@ -193,6 +195,7 @@ def login_window():
     root.bind('<Return>', lambda event: verify_password())
 
 
+
 # Main pasword manager window
 def manager_window():
     for widget in root.winfo_children():
@@ -207,20 +210,44 @@ def manager_window():
 
         manager_window()
 
+
+    #creating main frame
+    main_frame = Frame(root, bg=BG)
+    main_frame.pack(fill=BOTH, expand=1)
+
+    #creating canvas
+    canvas = Canvas(main_frame, bg=BG, highlightthickness=1, highlightbackground=BG)
+    canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+    #adding scrollbar to the frame
+    scrlbar = ttk.Scrollbar(main_frame, orient=VERTICAL, command=canvas.yview)
+    scrlbar.pack(side=RIGHT, fill=Y)
+    
+    #confguring the canvas
+    canvas.configure(yscrollcommand=scrlbar.set)
+    canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
+
+    #creating second frame
+    sec_frame = Frame(canvas, bg=BG)
+
+    #adding second frame to new window in canvas
+    canvas.create_window((0,0), window=sec_frame, anchor='nw')
+
+
     # Button to add entry
-    btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
+    btn = Button(sec_frame, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
     btn.place(x=325, y=10)
 
     # Creating labels
     pad_x = 60
     pad_y = 50
-    lbl1 = Label(root, text="Platform", bg=BG, fg=FG)
+    lbl1 = Label(sec_frame, text="Platform", bg=BG, fg=FG)
     lbl1.grid(column=0, row=2, padx=pad_x, pady=pad_y)
-    lbl1 = Label(root, text="E-mail", bg=BG, fg=FG)
+    lbl1 = Label(sec_frame, text="E-mail", bg=BG, fg=FG)
     lbl1.grid(column=1, row=2, padx=pad_x, pady=pad_y)
-    lbl1 = Label(root, text="Username", bg=BG, fg=FG)
+    lbl1 = Label(sec_frame, text="Username", bg=BG, fg=FG)
     lbl1.grid(column=2, row=2, padx=pad_x, pady=pad_y)
-    lbl1 = Label(root, text="Password", bg=BG, fg=FG)
+    lbl1 = Label(sec_frame, text="Password", bg=BG, fg=FG)
     lbl1.grid(column=3, row=2, padx=pad_x, pady=pad_y)
 
     # Displaying info from database
@@ -236,16 +263,16 @@ def manager_window():
             cursor.execute("SELECT * FROM vault")
             array = cursor.fetchall()
 
-            lbl = Label(root, text=fernetobj.decrypt(array[i][1]), bg=BG, fg=FG)
+            lbl = Label(sec_frame, text=fernetobj.decrypt(array[i][1]), bg=BG, fg=FG)
             lbl.grid(column=0, row=i+3)
-            lbl = Label(root, text=fernetobj.decrypt(array[i][2]), bg=BG, fg=FG)
+            lbl = Label(sec_frame, text=fernetobj.decrypt(array[i][2]), bg=BG, fg=FG)
             lbl.grid(column=1, row=i+3)
-            lbl = Label(root, text=fernetobj.decrypt(array[i][3]), bg=BG, fg=FG)
+            lbl = Label(sec_frame, text=fernetobj.decrypt(array[i][3]), bg=BG, fg=FG)
             lbl.grid(column=2, row=i+3)
-            lbl = Label(root, text=fernetobj.decrypt(array[i][4]), bg=BG, fg=FG)
+            lbl = Label(sec_frame, text=fernetobj.decrypt(array[i][4]), bg=BG, fg=FG)
             lbl.grid(column=3, row=i+3)
 
-            btn = Button(root, text="Delete", command = partial(delete_entry, array[i][0]))
+            btn = Button(sec_frame, text="Delete", command = partial(delete_entry, array[i][0]))
             btn.grid(column=4, row=i+3)
 
             i += 1
@@ -276,9 +303,9 @@ def create_bckup():
 cursor.execute("SELECT * FROM masterpassword")
 if cursor.fetchall():
     login_window()
-    create_bckup()
+    #create_bckup()
 else:
     first_time_window()
 
-#root.resizable(False, False)
+root.resizable(False, False)
 mainloop()
