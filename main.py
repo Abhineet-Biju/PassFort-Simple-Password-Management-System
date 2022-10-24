@@ -210,7 +210,7 @@ def manager_window():
 
         manager_window()
 
-
+    #creating frames and canvases for adding scrollbar
     #creating main frame
     main_frame = Frame(root, bg=BG)
     main_frame.pack(fill=BOTH, expand=1)
@@ -220,7 +220,7 @@ def manager_window():
     canvas.pack(side=LEFT, fill=BOTH, expand=1)
 
     #adding scrollbar to the frame
-    scrlbar = ttk.Scrollbar(main_frame, orient=VERTICAL, command=canvas.yview)
+    scrlbar = ttk.Scrollbar(main_frame, style="arrowless.Vertical.TScrollbar", orient=VERTICAL, command=canvas.yview)
     scrlbar.pack(side=RIGHT, fill=Y)
     
     #confguring the canvas
@@ -293,7 +293,6 @@ def create_bckup():
     shutil.move('backup.db', path)
 
 #function to import backup
-
 
 
 
