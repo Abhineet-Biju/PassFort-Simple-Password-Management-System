@@ -1,4 +1,5 @@
 from bdb import Breakpoint
+from distutils.cmd import Command
 from tkinter import*
 from tkinter import ttk
 from tkinter import filedialog
@@ -9,6 +10,8 @@ from cryptography.fernet import Fernet
 import shutil
 import os
 
+#initializing global variable for the menubar
+control_var = True
 
 # Creating Database
 with sqlite3.connect("pass_vault.db") as db:
@@ -90,6 +93,17 @@ def add_entry():
     window.bind('<Return>', lambda event: Submit())
         
     mainloop()
+
+#defining menubar function
+def menuBar():
+    global control_var
+    if control_var:
+        exportbtn.place(x=670,y=35)
+        control_var = False
+    else:
+        exportbtn.place_forget()
+        control_var = True
+
 
 # Window initialization
 root = Tk()
@@ -242,6 +256,14 @@ def manager_window():
     # Button to add entry
     btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
     btn.place(x=325, y=10)
+    
+    #menubar button
+    mnu = Button(root, text='options', command=menuBar)
+    mnu.place(x=670, y=10)
+
+    #defining menubar sub-buttons
+    global exportbtn
+    exportbtn = Button(root, text='export', command=export_bckup)
 
     # Creating labels
     pad_x = 60
@@ -287,7 +309,7 @@ def manager_window():
                 break
 
 #function to create backup
-def create_bckup():
+def export_bckup():
     shutil.copyfile('pass_vault.db', 'backup.db')
     con = sqlite3.connect('backup.db')
     c = con.cursor()
@@ -307,7 +329,7 @@ def create_bckup():
 cursor.execute("SELECT * FROM masterpassword")
 if cursor.fetchall():
     login_window()
-    #create_bckup()
+    #export_bckup()
 else:
     first_time_window()
 
