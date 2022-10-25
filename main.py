@@ -7,6 +7,7 @@ import hashlib
 from functools import partial
 from cryptography.fernet import Fernet
 import shutil
+import os
 
 
 # Creating Database
@@ -198,6 +199,10 @@ def login_window():
 
 # Main pasword manager window
 def manager_window():
+    try:
+        os.remove('backup.db')
+    except:
+        pass
     for widget in root.winfo_children():
         widget.destroy()
     root.geometry("750x500")
@@ -235,7 +240,7 @@ def manager_window():
 
 
     # Button to add entry
-    btn = Button(sec_frame, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
+    btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
     btn.place(x=325, y=10)
 
     # Creating labels
