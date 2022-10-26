@@ -98,11 +98,14 @@ def add_entry():
 def menuBar():
     global control_var
     if control_var:
-        exportbtn.place(x=660,y=40)
+        importbtn.place(x=660,y=35)
+        exportbtn.place(x=660,y=55)
         control_var = False
     else:
+        importbtn.place_forget()
         exportbtn.place_forget()
         control_var = True
+
 
 #function to create backup
 def export_bckup():
@@ -267,14 +270,19 @@ def manager_window():
     btn.place(x=325, y=10)
     
     #menubar button
+    dark_FG = '#6E6E6E'
     mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, 
-                 bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', borderwidth=0)
+                 bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', borderwidth=0)
     mnu.place(x=660, y=10)
 
     #defining menubar sub-buttons
-    global exportbtn
+    global exportbtn, importbtn
+    importbtn = Button(root, text='import',font='Helvetica 10 underline', bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', width=7, borderwidth=0)
+
     exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, 
                        bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', width=7, borderwidth=0)
+
+                       
 
     # Creating labels
     pad_x = 60
@@ -321,7 +329,7 @@ def manager_window():
 
 
 
-#function to import backup
+
 
 
 
