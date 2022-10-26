@@ -100,11 +100,31 @@ def menuBar():
     if control_var:
         importbtn.place(x=660,y=35)
         exportbtn.place(x=660,y=55)
+        abtbtn.place(x=660,y=75)
         control_var = False
     else:
         importbtn.place_forget()
         exportbtn.place_forget()
+        abtbtn.place_forget()
         control_var = True
+
+
+#function to import backup
+def import_bckup():
+    wrng_win = Toplevel()
+    wrng_win.geometry('250x300')
+    wrng_win.title('import')
+    wrng_win.configure(bg=BG)
+
+    lbl1 = Label(wrng_win, text='WARNING!', font='Helvetica 15 bold', bg=BG, fg='red')
+    lbl1.pack(anchor=CENTER)
+    warning_txt = """Importing will lead to the permanent 
+loss of your current saved information.
+
+Make sure you have saved/exported 
+your current passwords"""
+    lbl2 = Label(wrng_win, text=warning_txt, font='Helvetica 10 bold', bg=BG, fg='red')
+    lbl2.pack(anchor=NW)
 
 
 #function to create backup
@@ -271,16 +291,20 @@ def manager_window():
     
     #menubar button
     dark_FG = '#6E6E6E'
+
     mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, 
-                 bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', borderwidth=0)
+                 bg=BG, fg=FG, activebackground=BG, activeforeground=dark_FG, relief='sunken', borderwidth=0)
     mnu.place(x=660, y=10)
 
     #defining menubar sub-buttons
-    global exportbtn, importbtn
-    importbtn = Button(root, text='import',font='Helvetica 10 underline', bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', width=7, borderwidth=0)
+    global exportbtn, importbtn, abtbtn
+    importbtn = Button(root, text='import',font='Helvetica 10 underline', command=import_bckup,
+                       bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
     exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, 
-                       bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', width=7, borderwidth=0)
+                       bg=BG, fg=FG, activebackground=BG, activeforeground=dark_FG, relief='sunken', width=7, borderwidth=0)
+
+    abtbtn = Button(root, text='about',font='Helvetica 10 underline', bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
                        
 
