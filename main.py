@@ -258,12 +258,12 @@ def manager_window():
     btn.place(x=325, y=10)
     
     #menubar button
-    mnu = Button(root, text='options', command=menuBar)
-    mnu.place(x=670, y=10)
+    mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, bg=BG, activebackground=BG, activeforeground=FG, fg=FG, borderwidth=0, relief='sunken')
+    mnu.place(x=660, y=10)
 
     #defining menubar sub-buttons
     global exportbtn
-    exportbtn = Button(root, text='export', command=export_bckup)
+    exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, bg=BG, activebackground=BG, activeforeground=FG, fg=FG, borderwidth=0, relief='sunken')
 
     # Creating labels
     pad_x = 60
