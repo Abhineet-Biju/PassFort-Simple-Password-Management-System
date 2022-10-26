@@ -98,11 +98,22 @@ def add_entry():
 def menuBar():
     global control_var
     if control_var:
-        exportbtn.place(x=670,y=35)
+        exportbtn.place(x=660,y=40)
         control_var = False
     else:
         exportbtn.place_forget()
         control_var = True
+
+#function to create backup
+def export_bckup():
+    shutil.copyfile('pass_vault.db', 'backup.db')
+    con = sqlite3.connect('backup.db')
+    c = con.cursor()
+    delete = "DELETE FROM masterpassword"
+    c.execute(delete)
+    con.commit()
+    path = filedialog.askdirectory()
+    shutil.move('backup.db', path)
 
 
 # Window initialization
@@ -174,7 +185,10 @@ def first_time_window():
 
 #Login Window
 def login_window():
-    root.resizable(False, False)
+    try:
+        os.remove('backup.db')
+    except:
+        pass
     root.geometry("300x107")
 
     lbl1 = Label(root, text="Enter Master Password",height=2, anchor=CENTER,  bg=BG, fg=FG)
@@ -213,14 +227,9 @@ def login_window():
 
 # Main pasword manager window
 def manager_window():
-    try:
-        os.remove('backup.db')
-    except:
-        pass
     for widget in root.winfo_children():
         widget.destroy()
     root.geometry("750x500")
-    root.resizable(True, True)
     
     # Function for removing info from database
     def delete_entry(input):
@@ -258,12 +267,14 @@ def manager_window():
     btn.place(x=325, y=10)
     
     #menubar button
-    mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, bg=BG, activebackground=BG, activeforeground=FG, fg=FG, borderwidth=0, relief='sunken')
+    mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, 
+                 bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', borderwidth=0)
     mnu.place(x=660, y=10)
 
     #defining menubar sub-buttons
     global exportbtn
-    exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, bg=BG, activebackground=BG, activeforeground=FG, fg=FG, borderwidth=0, relief='sunken')
+    exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, 
+                       bg=BG, activebackground=BG, activeforeground=FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
     # Creating labels
     pad_x = 60
@@ -308,16 +319,7 @@ def manager_window():
             if len(cursor.fetchall()) <= i:
                 break
 
-#function to create backup
-def export_bckup():
-    shutil.copyfile('pass_vault.db', 'backup.db')
-    con = sqlite3.connect('backup.db')
-    c = con.cursor()
-    delete = "DELETE FROM masterpassword"
-    c.execute(delete)
-    con.commit()
-    path = filedialog.askdirectory()
-    shutil.move('backup.db', path)
+
 
 #function to import backup
 
