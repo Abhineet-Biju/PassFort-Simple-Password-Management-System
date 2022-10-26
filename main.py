@@ -6,6 +6,7 @@ from tkinter import filedialog
 import sqlite3
 import hashlib
 from functools import partial
+from turtle import down
 from cryptography.fernet import Fernet
 import shutil
 import os
@@ -109,12 +110,13 @@ def menuBar():
         control_var = True
 
 
-#function to import backup
-def import_bckup():
+#function to display import warning
+def import_warning():
     wrng_win = Toplevel()
-    wrng_win.geometry('250x300')
+    wrng_win.geometry('250x250')
     wrng_win.title('import')
     wrng_win.configure(bg=BG)
+    wrng_win.resizable(False, False)
 
     lbl1 = Label(wrng_win, text='WARNING!', font='Helvetica 15 bold', bg=BG, fg='red')
     lbl1.pack(anchor=CENTER)
@@ -122,9 +124,31 @@ def import_bckup():
 loss of your current saved information.
 
 Make sure you have saved/exported 
-your current passwords"""
+your current passwords."""
     lbl2 = Label(wrng_win, text=warning_txt, font='Helvetica 10 bold', bg=BG, fg='red')
     lbl2.pack(anchor=NW)
+
+    #creating final import button
+    import_btn = Button(wrng_win, text='Import', font='Helvetica 13 bold', bg=BG, fg='grey', activebackground=BG, activeforeground='grey', 
+                        relief=SUNKEN, width=7)
+
+    def import_btnBind():
+        if var.get() == 1:
+            import_btn.config(relief=RAISED, fg='red', activeforeground='red')            
+        else:
+            import_btn.config(relief=SUNKEN, fg='grey', activeforeground='grey')
+
+
+
+    #creating confirmation checkbox
+    var = IntVar()
+    checkbox = Checkbutton(wrng_win, text='  I have saved my current \n passwords in a safe location',
+                           bg=BG, fg=FG, activebackground=BG, activeforeground=FG, selectcolor=BG, variable=var, command=import_btnBind)
+    checkbox.pack(anchor=S,pady=15)
+
+    import_btn.pack(anchor=S,pady=5)
+
+   
 
 
 #function to create backup
@@ -298,7 +322,7 @@ def manager_window():
 
     #defining menubar sub-buttons
     global exportbtn, importbtn, abtbtn
-    importbtn = Button(root, text='import',font='Helvetica 10 underline', command=import_bckup,
+    importbtn = Button(root, text='import',font='Helvetica 10 underline', command=import_warning,
                        bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
     exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, 
