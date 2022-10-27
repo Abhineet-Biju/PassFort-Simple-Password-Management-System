@@ -112,9 +112,10 @@ def menuBar():
 
 #function to display import warning
 def import_warning():
+    global wrng_win
     wrng_win = Toplevel()
     wrng_win.geometry('250x250')
-    wrng_win.title('import')
+    wrng_win.title('Import')
     wrng_win.configure(bg=BG)
     wrng_win.resizable(False, False)
 
@@ -134,9 +135,9 @@ your current passwords."""
 
     def import_btnBind():
         if var.get() == 1:
-            import_btn.config(relief=RAISED, fg='red', activeforeground='red')            
+            import_btn.config(relief=RAISED, fg='red', activeforeground='red', command=import_bckup)            
         else:
-            import_btn.config(relief=SUNKEN, fg='grey', activeforeground='grey')
+            import_btn.config(relief=SUNKEN, fg='grey', activeforeground='grey', command=None)
 
 
 
@@ -148,8 +149,12 @@ your current passwords."""
 
     import_btn.pack(anchor=S,pady=5)
 
-   
-
+#fucntion to import backup
+def import_bckup():
+    path = filedialog.askopenfilename()
+    shutil.copyfile(path, 'pass_vault.db')  
+    wrng_win.destroy()
+    manager_window()
 
 #function to create backup
 def export_bckup():
