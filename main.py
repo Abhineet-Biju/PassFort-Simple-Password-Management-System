@@ -181,7 +181,7 @@ root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
 # Defining button images
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
 submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit Type 1 5%.png")
-add_img = PhotoImage(file="resources ignored\Button\Products\Add Button\Add Type 4 5%.png")
+add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\finaladdbtn1 7%.png")
 
 # Hashing data
 def hash_password(input):
@@ -315,8 +315,8 @@ def manager_window():
 
 
     # Button to add entry
-    btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
-    btn.place(x=325, y=10)
+    btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=45, width=100, bd=0, activebackground=BG)
+    btn.place(x=325, y=3)
     
     #menubar button
     dark_FG = '#6E6E6E'
