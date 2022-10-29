@@ -1,5 +1,3 @@
-from bdb import Breakpoint
-from distutils.cmd import Command
 from tkinter import*
 from tkinter import ttk
 from tkinter import filedialog
@@ -181,7 +179,7 @@ root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
 # Defining button images
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
 submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit Type 1 5%.png")
-add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\finaladdbtn1 7%.png")
+add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\addbtn style2 7%.png")
 
 # Hashing data
 def hash_password(input):
@@ -396,5 +394,5 @@ if cursor.fetchall():
 else:
     first_time_window()
 
-root.resizable(False, False)
+#root.resizable(False, False)
 mainloop()
