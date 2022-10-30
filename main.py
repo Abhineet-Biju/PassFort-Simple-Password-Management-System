@@ -173,7 +173,7 @@ def abt_info():
     version = 1.0
     abt_win = Toplevel(bg=BG)
     abt_win.title("About")
-    abt_win.geometry('300x300')
+    abt_win.geometry('300x213')
     #abt_win.resizable(False,False)
 
     #creating variables for storing required text 
@@ -181,8 +181,8 @@ def abt_info():
 Management System"""
     txt2 = f"Build: version {version} (stable)"
     txt3 = "Developed and Maintained by:"
-    txt4 = "Abhineet Biju"
-    txt5 = "My Social Media:"
+    name = "Abhineet Biju"
+    txt5 = "My Social Media (Links):"
     linkedin = "https://linkedin.com/in/abhineet-biju-528a62227"
 
     #defining function to open a link
@@ -193,7 +193,7 @@ Management System"""
     lbl1 = Label(abt_win,text=txt1,font='Helvetica 15 bold',bg=BG,fg='white')
     lbl2 = Label(abt_win,text=txt2,font='Helvetica 8 bold',bg=BG,fg=FG)
     lbl3 = Label(abt_win,text=txt3,font='Helvetica 13 bold',bg=BG,fg='white')
-    lbl4 = Label(abt_win,text=txt4,font='Helvetica 10 bold',bg=BG,fg=FG)
+    lbl4 = Label(abt_win,text=name,font='Helvetica 11 bold',bg=BG,fg=FG)
     lbl5 = Label(abt_win,text=txt5,font='Helvetica 13 bold',bg=BG,fg='white')
     lbl6 = Label(abt_win,text="LinkedIn",font='Helvetica 11 bold underline',bg=BG,fg='#0200FF')
     lbl6.bind("<Button-1>",lambda e: callback(linkedin))
