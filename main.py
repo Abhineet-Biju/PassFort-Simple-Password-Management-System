@@ -41,7 +41,7 @@ def add_entry():
     window =Toplevel()
     window.config(bg=BG)
     window.title("Add Entry")
-    window.geometry("250x205")
+    window.geometry("250x213")
 
     lbl1 = Label(window, text="Platform", anchor=CENTER, bg=BG, fg=FG)
     lbl1.pack()
@@ -87,7 +87,7 @@ def add_entry():
 
         manager_window()
     
-    btn = Button(window, image=submit_img, height=27, width=85, bd=0, activebackground=BG, command=Submit)
+    btn = Button(window, image=submit_img, height=35, width=91, bd=0, activebackground=BG, command=Submit)
     btn.pack(pady=8)
     window.bind('<Return>', lambda event: Submit())
         
@@ -178,7 +178,7 @@ root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
 
 # Defining button images
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
-submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit Type 1 5%.png")
+submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit final 7%.png")
 add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\addbtn style2 7%.png")
 del_img = PhotoImage(file="resources ignored\Button\Products\Delete Button\delete  button final 6%.png")
 
@@ -240,7 +240,7 @@ def login_window():
         os.remove('backup.db')
     except:
         pass
-    root.geometry("300x107")
+    root.geometry("300x117")
 
     lbl1 = Label(root, text="Enter Master Password",height=2, anchor=CENTER,  bg=BG, fg=FG)
     lbl1.pack()
@@ -249,11 +249,11 @@ def login_window():
     entry.pack()
     entry.focus()
 
-    btn = Button(root, image=submit_img, height=27, width=85, bd=0, activebackground=BG)
+    btn = Button(root, image=submit_img, height=37, width=91, bd=0, activebackground=BG)
     btn.pack(pady=12)
 
-    lbl2 = Label(root,anchor=S,  bg=BG, fg=FG)
-    lbl2.pack()
+    #lbl2 = Label(root,anchor=S,  bg=BG, fg=FG)
+    #lbl2.pack()
 
     def get_master_password():
         check_hashed_password = hash_password(entry.get().encode("utf-8"))
@@ -269,7 +269,7 @@ def login_window():
             manager_window()
         else:
             entry.delete(0, 'end')
-            lbl2.config(text="Wrong Password!", fg=red_FG)
+            lbl1.config(text="Wrong Password!", fg=red_FG)
 
     btn.config(command=verify_password)    
     root.bind('<Return>', lambda event: verify_password())
@@ -315,7 +315,7 @@ def manager_window():
 
     # Button to add entry
     btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=45, width=100, bd=0, activebackground=BG)
-    btn.place(x=325, y=3)
+    btn.place(x=338, y=3)
     
     #menubar button
     dark_FG = '#6E6E6E'
