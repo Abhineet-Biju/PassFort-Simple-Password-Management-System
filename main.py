@@ -180,6 +180,7 @@ root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
 submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit Type 1 5%.png")
 add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\addbtn style2 7%.png")
+del_img = PhotoImage(file="resources ignored\Button\Products\Delete Button\delete  button final 6%.png")
 
 # Hashing data
 def hash_password(input):
@@ -279,7 +280,7 @@ def login_window():
 def manager_window():
     for widget in root.winfo_children():
         widget.destroy()
-    root.geometry("750x500")
+    root.geometry("775x500")
     
     # Function for removing info from database
     def delete_entry(input):
@@ -321,7 +322,7 @@ def manager_window():
 
     mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, 
                  bg=BG, fg=FG, activebackground=BG, activeforeground=dark_FG, relief='sunken', borderwidth=0)
-    mnu.place(x=660, y=10)
+    mnu.place(x=685, y=10)
 
     #defining menubar sub-buttons
     global exportbtn, importbtn, abtbtn
@@ -369,8 +370,9 @@ def manager_window():
             lbl = Label(sec_frame, text=fernetobj.decrypt(array[i][4]), bg=BG, fg=FG)
             lbl.grid(column=3, row=i+3)
 
-            btn = Button(sec_frame, text="Delete", command = partial(delete_entry, array[i][0]))
-            btn.grid(column=4, row=i+3)
+            del_btn = Button(sec_frame, relief=FLAT, image=del_img, command = partial(delete_entry, array[i][0]),
+                         activebackground=BG, bd=0, height=25, width=57)
+            del_btn.grid(column=4, row=i+3)
 
             i += 1
 
