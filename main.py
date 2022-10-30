@@ -112,7 +112,7 @@ def menuBar():
 def import_warning():
     global wrng_win
     wrng_win = Toplevel()
-    wrng_win.geometry('250x250')
+    wrng_win.geometry('250x300')
     wrng_win.title('Import')
     wrng_win.configure(bg=BG)
     wrng_win.resizable(False, False)
@@ -123,7 +123,11 @@ def import_warning():
 loss of your current saved information.
 
 Make sure you have saved/exported 
-your current passwords."""
+your current passwords.
+
+*UPON NEXT RESTART, A NEW
+MASTERPASSWORD WILL HAVE TO 
+BE SET"""
     lbl2 = Label(wrng_win, text=warning_txt, font='Helvetica 10 bold', bg=BG, fg='red')
     lbl2.pack(anchor=NW)
 
@@ -138,12 +142,11 @@ your current passwords."""
             import_btn.config(relief=SUNKEN, fg='grey', activeforeground='grey', command=None)
 
 
-
     #creating confirmation checkbox
     var = IntVar()
     checkbox = Checkbutton(wrng_win, text='  I have saved my current \n passwords in a safe location',
                            bg=BG, fg=FG, activebackground=BG, activeforeground=FG, selectcolor=BG, variable=var, command=import_btnBind)
-    checkbox.pack(anchor=S,pady=15)
+    checkbox.pack(anchor=S,pady=13)
 
     import_btn.pack(anchor=S,pady=5)
 
@@ -168,7 +171,7 @@ def export_bckup():
 
 # Window initialization
 root = Tk()
-root.title("Password Manager")
+root.title("PassFort-Simple Password Management System")
 BG = "#444444"
 FG = "#bcbcbc"
 red_FG = "#f44336"
