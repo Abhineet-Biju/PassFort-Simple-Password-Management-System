@@ -97,9 +97,9 @@ def add_entry():
 def menuBar():
     global control_var
     if control_var:
-        importbtn.place(x=660,y=35)
-        exportbtn.place(x=660,y=55)
-        abtbtn.place(x=660,y=75)
+        importbtn.place(x=685,y=35)
+        exportbtn.place(x=685,y=55)
+        abtbtn.place(x=685,y=75)
         control_var = False
     else:
         importbtn.place_forget()
