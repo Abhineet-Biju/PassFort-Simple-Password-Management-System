@@ -217,8 +217,7 @@ BG = "#444444"
 FG = "#bcbcbc"
 red_FG = "#f44336"
 root.config(bg=BG)
-root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
-
+root.iconbitmap(default=r"resources ignored\App Logo\app-logo-final-cropped-centered.ico")
 
 # Defining button images
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Button Final 7%.png")
