@@ -120,7 +120,7 @@ def import_warning():
     lbl1 = Label(wrng_win, text='WARNING!', font='Helvetica 15 bold', bg=BG, fg='red')
     lbl1.pack(anchor=CENTER)
     warning_txt = """Importing will lead to the permanent 
-loss of your current saved information.
+loss of your current saved passwords.
 
 Make sure you have saved/exported 
 your current passwords.
@@ -234,7 +234,7 @@ def hash_password(input):
 # First time window
 def first_time_window():
     root.geometry("300x165")
-    #root.resizable(False, False)
+    root.resizable(False, False)
 
     lbl1 = Label(root, text="Set Master Password",height=2, anchor=CENTER, bg=BG, fg=FG)
     lbl1.pack()
@@ -440,5 +440,5 @@ if cursor.fetchall():
 else:
     first_time_window()
 
-#root.resizable(False, False)
+root.resizable(False, False)
 mainloop()
