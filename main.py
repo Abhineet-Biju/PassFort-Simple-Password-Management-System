@@ -221,7 +221,7 @@ root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
 
 
 # Defining button images
-set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
+set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Button Final 7%.png")
 submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit final 7%.png")
 add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\addbtn style2 7%.png")
 del_img = PhotoImage(file="resources ignored\Button\Products\Delete Button\delete  button final 6%.png")
@@ -234,8 +234,8 @@ def hash_password(input):
 
 # First time window
 def first_time_window():
-    root.geometry("300x150")
-    root.resizable(False, False)
+    root.geometry("300x165")
+    #root.resizable(False, False)
 
     lbl1 = Label(root, text="Set Master Password",height=2, anchor=CENTER, bg=BG, fg=FG)
     lbl1.pack()
@@ -250,7 +250,7 @@ def first_time_window():
     entry2 = Entry(root, width=20)
     entry2.pack()
 
-    btn = Button(root, image=set_img, height=30, width=85, bd=0, activebackground=BG)
+    btn = Button(root, image=set_img, height=43, width=97, bd=0, activebackground=BG)
     btn.pack(pady=5)
     root.bind('<Return>', lambda event: set_password())
     
