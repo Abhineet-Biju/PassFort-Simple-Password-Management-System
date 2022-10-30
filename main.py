@@ -5,6 +5,7 @@ import sqlite3
 import hashlib
 from functools import partial
 from turtle import down
+import webbrowser
 from cryptography.fernet import Fernet
 import shutil
 import os
@@ -111,10 +112,9 @@ def menuBar():
 #function to display import warning
 def import_warning():
     global wrng_win
-    wrng_win = Toplevel()
+    wrng_win = Toplevel(bg=BG)
     wrng_win.geometry('250x300')
     wrng_win.title('Import')
-    wrng_win.configure(bg=BG)
     wrng_win.resizable(False, False)
 
     lbl1 = Label(wrng_win, text='WARNING!', font='Helvetica 15 bold', bg=BG, fg='red')
@@ -167,6 +167,47 @@ def export_bckup():
     con.commit()
     path = filedialog.askdirectory()
     shutil.move('backup.db', path)
+
+#function to  diplay the about window
+def abt_info():
+    version = 1.0
+    abt_win = Toplevel(bg=BG)
+    abt_win.title("About")
+    abt_win.geometry('300x300')
+    #abt_win.resizable(False,False)
+
+    #creating variables for storing required text 
+    txt1 = """PassFort - Simple Password
+Management System"""
+    txt2 = f"Build: version {version} (stable)"
+    txt3 = "Developed and Maintained by:"
+    txt4 = "Abhineet Biju"
+    txt5 = "My Social Media:"
+    linkedin = "https://linkedin.com/in/abhineet-biju-528a62227"
+
+    #defining function to open a link
+    def callback(url):
+        webbrowser.open_new(url)
+    
+    #creating labels holding the text
+    lbl1 = Label(abt_win,text=txt1,font='Helvetica 15 bold',bg=BG,fg='white')
+    lbl2 = Label(abt_win,text=txt2,font='Helvetica 8 bold',bg=BG,fg=FG)
+    lbl3 = Label(abt_win,text=txt3,font='Helvetica 13 bold',bg=BG,fg='white')
+    lbl4 = Label(abt_win,text=txt4,font='Helvetica 10 bold',bg=BG,fg=FG)
+    lbl5 = Label(abt_win,text=txt5,font='Helvetica 13 bold',bg=BG,fg='white')
+    lbl6 = Label(abt_win,text="LinkedIn",font='Helvetica 11 bold underline',bg=BG,fg='#0200FF')
+    lbl6.bind("<Button-1>",lambda e: callback(linkedin))
+    
+
+    #placing the labels on the window
+    lbl1.pack(anchor=CENTER)
+    lbl2.pack(anchor=CENTER)
+    lbl3.pack(anchor=CENTER,pady=(15,1))
+    lbl4.pack(anchor=CENTER)
+    lbl5.pack(anchor=CENTER,pady=(15,1))
+    lbl6.pack(anchor=CENTER)
+
+
 
 
 # Window initialization
@@ -335,7 +376,8 @@ def manager_window():
     exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, 
                        bg=BG, fg=FG, activebackground=BG, activeforeground=dark_FG, relief='sunken', width=7, borderwidth=0)
 
-    abtbtn = Button(root, text='about',font='Helvetica 10 underline', bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
+    abtbtn = Button(root, text='about',font='Helvetica 10 underline', command=abt_info,
+                    bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
                        
 
