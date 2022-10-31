@@ -190,11 +190,11 @@ Management System"""
         webbrowser.open_new(url)
     
     #creating labels holding the text
-    lbl1 = Label(abt_win,text=txt1,font='Helvetica 15 bold',bg=BG,fg='white')
+    lbl1 = Label(abt_win,text=txt1,font=('Helvetica',15),bg=BG,fg='white')
     lbl2 = Label(abt_win,text=txt2,font='Helvetica 8 bold',bg=BG,fg=FG)
-    lbl3 = Label(abt_win,text=txt3,font='Helvetica 13 bold',bg=BG,fg='white')
+    lbl3 = Label(abt_win,text=txt3,font=('Helvetica',13),bg=BG,fg='white')
     lbl4 = Label(abt_win,text=name,font='Helvetica 11 bold',bg=BG,fg=FG)
-    lbl5 = Label(abt_win,text=txt5,font='Helvetica 13 bold',bg=BG,fg='white')
+    lbl5 = Label(abt_win,text=txt5,font=('Helvetica',13),bg=BG,fg='white')
     lbl6 = Label(abt_win,text="LinkedIn",font='Helvetica 11 bold underline',bg=BG,fg='#0200FF')
     lbl6.bind("<Button-1>",lambda e: callback(linkedin))
     
@@ -217,13 +217,13 @@ BG = "#444444"
 FG = "#bcbcbc"
 red_FG = "#f44336"
 root.config(bg=BG)
-root.iconbitmap(default=r"resources ignored\App Logo\app-logo-final-cropped-centered.ico")
+root.iconbitmap(default=r"Resources\Products\Logo\app-logo-final-cropped-centered.ico")
 
 # Defining button images
-set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Button Final 7%.png")
-submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit final 7%.png")
-add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\addbtn style2 7%.png")
-del_img = PhotoImage(file="resources ignored\Button\Products\Delete Button\delete  button final 3 6%.png")
+set_img = PhotoImage(file="Resources\Products\Buttons\Set Button\set_btn_7%.png")
+submit_img = PhotoImage(file="Resources\Products\Buttons\Submit Button\submit_btn_7%.png")
+add_img = PhotoImage(file=r"Resources\Products\Buttons\Add Button\add_btn_style2_7%.png")
+del_img = PhotoImage(file="Resources\Products\Buttons\Delete Button\delete_btn_style3_6%.png")
 
 # Hashing data
 def hash_password(input):
