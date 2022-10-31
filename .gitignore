@@ -1,4 +1,4 @@
 pass_vault.db
 backup.db
-resources ignored
 venv
+resources_ignored
