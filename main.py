@@ -125,11 +125,11 @@ loss of your current saved passwords.
 Make sure you have saved/exported 
 your current passwords.
 
-*UPON NEXT RESTART, A NEW
+***UPON NEXT RESTART, A NEW
 MASTERPASSWORD WILL HAVE TO 
-BE SET"""
+BE SET***"""
     lbl2 = Label(wrng_win, text=warning_txt, font='Helvetica 10 bold', bg=BG, fg='red')
-    lbl2.pack(anchor=NW)
+    lbl2.pack(anchor=CENTER)
 
     #creating final import button
     import_btn = Button(wrng_win, text='Import', font='Helvetica 13 bold', bg=BG, fg='grey', activebackground=BG, activeforeground='grey', 
@@ -223,7 +223,7 @@ root.iconbitmap(default=r"resources ignored\App Logo\app-logo-final-cropped-cent
 set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Button Final 7%.png")
 submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit final 7%.png")
 add_img = PhotoImage(file=r"resources ignored\Button\Products\Add Button\addbtn style2 7%.png")
-del_img = PhotoImage(file="resources ignored\Button\Products\Delete Button\delete  button final 6%.png")
+del_img = PhotoImage(file="resources ignored\Button\Products\Delete Button\delete  button final 3 6%.png")
 
 # Hashing data
 def hash_password(input):
