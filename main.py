@@ -1,11 +1,11 @@
-from bdb import Breakpoint
-from distutils.cmd import Command
 from tkinter import*
 from tkinter import ttk
 from tkinter import filedialog
 import sqlite3
 import hashlib
 from functools import partial
+from turtle import down
+import webbrowser
 from cryptography.fernet import Fernet
 import shutil
 import os
@@ -42,7 +42,7 @@ def add_entry():
     window =Toplevel()
     window.config(bg=BG)
     window.title("Add Entry")
-    window.geometry("250x205")
+    window.geometry("250x213")
 
     lbl1 = Label(window, text="Platform", anchor=CENTER, bg=BG, fg=FG)
     lbl1.pack()
@@ -88,7 +88,7 @@ def add_entry():
 
         manager_window()
     
-    btn = Button(window, image=submit_img, height=27, width=85, bd=0, activebackground=BG, command=Submit)
+    btn = Button(window, image=submit_img, height=35, width=91, bd=0, activebackground=BG, command=Submit)
     btn.pack(pady=8)
     window.bind('<Return>', lambda event: Submit())
         
@@ -98,9 +98,9 @@ def add_entry():
 def menuBar():
     global control_var
     if control_var:
-        importbtn.place(x=660,y=35)
-        exportbtn.place(x=660,y=55)
-        abtbtn.place(x=660,y=75)
+        importbtn.place(x=685,y=35)
+        exportbtn.place(x=685,y=55)
+        abtbtn.place(x=685,y=75)
         control_var = False
     else:
         importbtn.place_forget()
@@ -109,23 +109,53 @@ def menuBar():
         control_var = True
 
 
-#function to import backup
-def import_bckup():
-    wrng_win = Toplevel()
+#function to display import warning
+def import_warning():
+    global wrng_win
+    wrng_win = Toplevel(bg=BG)
     wrng_win.geometry('250x300')
-    wrng_win.title('import')
-    wrng_win.configure(bg=BG)
+    wrng_win.title('Import')
+    wrng_win.resizable(False, False)
 
     lbl1 = Label(wrng_win, text='WARNING!', font='Helvetica 15 bold', bg=BG, fg='red')
     lbl1.pack(anchor=CENTER)
     warning_txt = """Importing will lead to the permanent 
-loss of your current saved information.
+loss of your current saved passwords.
 
 Make sure you have saved/exported 
-your current passwords"""
-    lbl2 = Label(wrng_win, text=warning_txt, font='Helvetica 10 bold', bg=BG, fg='red')
-    lbl2.pack(anchor=NW)
+your current passwords.
 
+***UPON NEXT RESTART, A NEW
+MASTERPASSWORD WILL HAVE TO 
+BE SET***"""
+    lbl2 = Label(wrng_win, text=warning_txt, font='Helvetica 10 bold', bg=BG, fg='red')
+    lbl2.pack(anchor=CENTER)
+
+    #creating final import button
+    import_btn = Button(wrng_win, text='Import', font='Helvetica 13 bold', bg=BG, fg='grey', activebackground=BG, activeforeground='grey', 
+                        relief=SUNKEN, width=7)
+
+    def import_btnBind():
+        if var.get() == 1:
+            import_btn.config(relief=RAISED, fg='red', activeforeground='red', command=import_bckup)            
+        else:
+            import_btn.config(relief=SUNKEN, fg='grey', activeforeground='grey', command=None)
+
+
+    #creating confirmation checkbox
+    var = IntVar()
+    checkbox = Checkbutton(wrng_win, text='  I have saved my current \n passwords in a safe location',
+                           bg=BG, fg=FG, activebackground=BG, activeforeground=FG, selectcolor=BG, variable=var, command=import_btnBind)
+    checkbox.pack(anchor=S,pady=13)
+
+    import_btn.pack(anchor=S,pady=5)
+
+#fucntion to import backup
+def import_bckup():
+    path = filedialog.askopenfilename()
+    shutil.copyfile(path, 'pass_vault.db')  
+    wrng_win.destroy()
+    manager_window()
 
 #function to create backup
 def export_bckup():
@@ -138,21 +168,62 @@ def export_bckup():
     path = filedialog.askdirectory()
     shutil.move('backup.db', path)
 
+#function to  diplay the about window
+def abt_info():
+    version = 1.0
+    abt_win = Toplevel(bg=BG)
+    abt_win.title("About")
+    abt_win.geometry('300x213')
+    #abt_win.resizable(False,False)
+
+    #creating variables for storing required text 
+    txt1 = """PassFort - Simple Password
+Management System"""
+    txt2 = f"Build: version {version} (stable)"
+    txt3 = "Developed and Maintained by:"
+    name = "Abhineet Biju"
+    txt5 = "My Social Media (Links):"
+    linkedin = "https://linkedin.com/in/abhineet-biju-528a62227"
+
+    #defining function to open a link
+    def callback(url):
+        webbrowser.open_new(url)
+    
+    #creating labels holding the text
+    lbl1 = Label(abt_win,text=txt1,font=('Helvetica',15),bg=BG,fg='white')
+    lbl2 = Label(abt_win,text=txt2,font='Helvetica 8 bold',bg=BG,fg=FG)
+    lbl3 = Label(abt_win,text=txt3,font=('Helvetica',13),bg=BG,fg='white')
+    lbl4 = Label(abt_win,text=name,font='Helvetica 11 bold',bg=BG,fg=FG)
+    lbl5 = Label(abt_win,text=txt5,font=('Helvetica',13),bg=BG,fg='white')
+    lbl6 = Label(abt_win,text="LinkedIn",font='Helvetica 11 bold underline',bg=BG,fg='#0200FF')
+    lbl6.bind("<Button-1>",lambda e: callback(linkedin))
+    
+
+    #placing the labels on the window
+    lbl1.pack(anchor=CENTER)
+    lbl2.pack(anchor=CENTER)
+    lbl3.pack(anchor=CENTER,pady=(15,1))
+    lbl4.pack(anchor=CENTER)
+    lbl5.pack(anchor=CENTER,pady=(15,1))
+    lbl6.pack(anchor=CENTER)
+
+
+
 
 # Window initialization
 root = Tk()
-root.title("Password Manager")
+root.title("PassFort-Simple Password Management System")
 BG = "#444444"
 FG = "#bcbcbc"
 red_FG = "#f44336"
 root.config(bg=BG)
-root.iconbitmap(default=r"resources ignored\App Logo\App Logo Type 2.ico")
-
+root.iconbitmap(default=r"Resources\Products\Logo\app-logo-final-cropped-centered.ico")
 
 # Defining button images
-set_img = PhotoImage(file="resources ignored\Button\Products\Set button\Set Type 4 5% 4.png")
-submit_img = PhotoImage(file="resources ignored\Button\Products\Submit Button\Submit Type 1 5%.png")
-add_img = PhotoImage(file="resources ignored\Button\Products\Add Button\Add Type 4 5%.png")
+set_img = PhotoImage(file="Resources\Products\Buttons\Set Button\set_btn_7%.png")
+submit_img = PhotoImage(file="Resources\Products\Buttons\Submit Button\submit_btn_7%.png")
+add_img = PhotoImage(file=r"Resources\Products\Buttons\Add Button\add_btn_style2_7%.png")
+del_img = PhotoImage(file="Resources\Products\Buttons\Delete Button\delete_btn_style3_6%.png")
 
 # Hashing data
 def hash_password(input):
@@ -162,7 +233,7 @@ def hash_password(input):
 
 # First time window
 def first_time_window():
-    root.geometry("300x150")
+    root.geometry("300x165")
     root.resizable(False, False)
 
     lbl1 = Label(root, text="Set Master Password",height=2, anchor=CENTER, bg=BG, fg=FG)
@@ -178,7 +249,7 @@ def first_time_window():
     entry2 = Entry(root, width=20)
     entry2.pack()
 
-    btn = Button(root, image=set_img, height=30, width=85, bd=0, activebackground=BG)
+    btn = Button(root, image=set_img, height=43, width=97, bd=0, activebackground=BG)
     btn.pack(pady=5)
     root.bind('<Return>', lambda event: set_password())
     
@@ -212,7 +283,7 @@ def login_window():
         os.remove('backup.db')
     except:
         pass
-    root.geometry("300x107")
+    root.geometry("300x117")
 
     lbl1 = Label(root, text="Enter Master Password",height=2, anchor=CENTER,  bg=BG, fg=FG)
     lbl1.pack()
@@ -221,11 +292,11 @@ def login_window():
     entry.pack()
     entry.focus()
 
-    btn = Button(root, image=submit_img, height=27, width=85, bd=0, activebackground=BG)
+    btn = Button(root, image=submit_img, height=37, width=91, bd=0, activebackground=BG)
     btn.pack(pady=12)
 
-    lbl2 = Label(root,anchor=S,  bg=BG, fg=FG)
-    lbl2.pack()
+    #lbl2 = Label(root,anchor=S,  bg=BG, fg=FG)
+    #lbl2.pack()
 
     def get_master_password():
         check_hashed_password = hash_password(entry.get().encode("utf-8"))
@@ -241,7 +312,7 @@ def login_window():
             manager_window()
         else:
             entry.delete(0, 'end')
-            lbl2.config(text="Wrong Password!", fg=red_FG)
+            lbl1.config(text="Wrong Password!", fg=red_FG)
 
     btn.config(command=verify_password)    
     root.bind('<Return>', lambda event: verify_password())
@@ -252,7 +323,7 @@ def login_window():
 def manager_window():
     for widget in root.winfo_children():
         widget.destroy()
-    root.geometry("750x500")
+    root.geometry("775x500")
     
     # Function for removing info from database
     def delete_entry(input):
@@ -286,25 +357,26 @@ def manager_window():
 
 
     # Button to add entry
-    btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=30, width=85, bd=0, activebackground=BG)
-    btn.place(x=325, y=10)
+    btn = Button(root, bg=BG, fg=FG, command=add_entry, image=add_img, height=45, width=100, bd=0, activebackground=BG)
+    btn.place(x=338, y=3)
     
     #menubar button
     dark_FG = '#6E6E6E'
 
     mnu = Button(root, text='options',font='Helvetica 13 underline', command=menuBar, 
                  bg=BG, fg=FG, activebackground=BG, activeforeground=dark_FG, relief='sunken', borderwidth=0)
-    mnu.place(x=660, y=10)
+    mnu.place(x=685, y=10)
 
     #defining menubar sub-buttons
     global exportbtn, importbtn, abtbtn
-    importbtn = Button(root, text='import',font='Helvetica 10 underline', command=import_bckup,
+    importbtn = Button(root, text='import',font='Helvetica 10 underline', command=import_warning,
                        bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
     exportbtn = Button(root, text='export',font='Helvetica 10 underline', command=export_bckup, 
                        bg=BG, fg=FG, activebackground=BG, activeforeground=dark_FG, relief='sunken', width=7, borderwidth=0)
 
-    abtbtn = Button(root, text='about',font='Helvetica 10 underline', bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
+    abtbtn = Button(root, text='about',font='Helvetica 10 underline', command=abt_info,
+                    bg=BG, activebackground=BG, activeforeground=dark_FG, fg=FG, relief='sunken', width=7, borderwidth=0)
 
                        
 
@@ -342,8 +414,9 @@ def manager_window():
             lbl = Label(sec_frame, text=fernetobj.decrypt(array[i][4]), bg=BG, fg=FG)
             lbl.grid(column=3, row=i+3)
 
-            btn = Button(sec_frame, text="Delete", command = partial(delete_entry, array[i][0]))
-            btn.grid(column=4, row=i+3)
+            del_btn = Button(sec_frame, relief=FLAT, image=del_img, command = partial(delete_entry, array[i][0]),
+                         activebackground=BG, bd=0, height=25, width=57)
+            del_btn.grid(column=4, row=i+3)
 
             i += 1
 
