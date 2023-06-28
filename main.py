@@ -10,11 +10,22 @@ from cryptography.fernet import Fernet
 import shutil
 import os
 
+#getting the directory to appdata
+appdata_dir = os.getenv('LOCALAPPDATA')
+global appdata_path
+appdata_path = appdata_dir + "\\PassFort\\"
+#creating pass_vault.db in the appdata folder
+if not(os.path.exists(appdata_path)):  #checking if directory already exists
+    os.mkdir(appdata_path)
+    if not(os.path.exists(appdata_path + "pass_vault.db")): #checking if file already exists
+        with open(appdata_path + "pass_vault.db",'x'):
+            pass
+
 #initializing global variable for the menubar
 control_var = True
 
 # Creating Database
-with sqlite3.connect("pass_vault.db") as db:
+with sqlite3.connect(appdata_path + "pass_vault.db") as db:
     cursor = db.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS masterpassword(
@@ -39,10 +50,11 @@ CREATE TABLE IF NOT EXISTS vault(
 
 # Creating window for recieving entries from user
 def add_entry():
-    window =Toplevel()
+    window = Toplevel()
     window.config(bg=BG)
     window.title("Add Entry")
     window.geometry("250x213")
+    window.resizable(False,False)
 
     lbl1 = Label(window, text="Platform", anchor=CENTER, bg=BG, fg=FG)
     lbl1.pack()
@@ -153,20 +165,25 @@ BE SET***"""
 #fucntion to import backup
 def import_bckup():
     path = filedialog.askopenfilename()
-    shutil.copyfile(path, 'pass_vault.db')  
+    shutil.copyfile(path, appdata_path + 'pass_vault.db')  
     wrng_win.destroy()
     manager_window()
 
 #function to create backup
 def export_bckup():
-    shutil.copyfile('pass_vault.db', 'backup.db')
-    con = sqlite3.connect('backup.db')
-    c = con.cursor()
-    delete = "DELETE FROM masterpassword"
-    c.execute(delete)
-    con.commit()
+    shutil.copyfile(appdata_path + "pass_vault.db", appdata_path + 'backup.db')
+    with sqlite3.connect(appdata_path + 'backup.db') as con:
+        c = con.cursor()
+        delete = "DELETE FROM masterpassword"
+        c.execute(delete)
+        con.commit()
     path = filedialog.askdirectory()
-    shutil.move('backup.db', path)
+    try:
+        if os.path.exists(path + "\\backup.db"):
+             os.remove(path + "\\backup.db")
+        shutil.move(appdata_path + 'backup.db', path)
+    except:
+        pass
 
 #function to  diplay the about window
 def abt_info():
@@ -279,16 +296,17 @@ def first_time_window():
 
 #Login Window
 def login_window():
-    try:
-        os.remove('backup.db')
+    try:    #deleting backup.db file if exists
+        os.remove(appdata_path + 'backup.db')
     except:
         pass
+
     root.geometry("300x117")
 
     lbl1 = Label(root, text="Enter Master Password",height=2, anchor=CENTER,  bg=BG, fg=FG)
     lbl1.pack()
 
-    entry = Entry(root, width=20)
+    entry = Entry(root, width=20,show="#")
     entry.pack()
     entry.focus()
 
