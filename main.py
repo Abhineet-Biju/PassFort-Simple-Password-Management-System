@@ -200,7 +200,7 @@ Management System"""
     txt3 = "Developed and Maintained by:"
     name = "Abhineet Biju"
     txt5 = "My Social Media (Links):"
-    linkedin = "https://linkedin.com/in/abhineet-biju-528a62227"
+    linkedin = r"https://www.linkedin.com/in/abhineet-biju/"
 
     #defining function to open a link
     def callback(url):
@@ -212,7 +212,7 @@ Management System"""
     lbl3 = Label(abt_win,text=txt3,font=('Helvetica',13),bg=BG,fg='white')
     lbl4 = Label(abt_win,text=name,font='Helvetica 11 bold',bg=BG,fg=FG)
     lbl5 = Label(abt_win,text=txt5,font=('Helvetica',13),bg=BG,fg='white')
-    lbl6 = Label(abt_win,text="LinkedIn",font='Helvetica 11 bold underline',bg=BG,fg='#0200FF')
+    lbl6 = Label(abt_win,text="LinkedIn",font='Helvetica 11 bold underline',bg=BG,fg='#ffdc65')
     lbl6.bind("<Button-1>",lambda e: callback(linkedin))
     
 
