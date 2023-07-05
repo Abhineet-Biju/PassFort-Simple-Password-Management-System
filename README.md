@@ -1,7 +1,7 @@
 
 <div align="center" width="50">
 
-<img src="https://static.wixstatic.com/media/4187ba_0976375f694044689db05a5d822411a6~mv2.png" alt="PassFort Logo" width="150"/>
+<img src="https://static.wixstatic.com/media/4187ba_0976375f694044689db05a5d822411a6~mv2.png" alt="PassFort Logo" width="300"/>
 
 </div>
 
