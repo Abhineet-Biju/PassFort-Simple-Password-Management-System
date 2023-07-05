@@ -187,7 +187,7 @@ def export_bckup():
 
 #function to  diplay the about window
 def abt_info():
-    version = "1.1.0"
+    version = "1.2.0"
     abt_win = Toplevel(bg=BG)
     abt_win.title("About")
     abt_win.geometry('300x213')
