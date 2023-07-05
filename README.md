@@ -40,6 +40,6 @@ For support and queries, email hello@abhineetbiju.com.
 
 ## Credits
 
-A huge thanks to Advanced Installer for being generous enough to provide us with a licence to package this project.
+A huge thanks to Advanced Installer for being kind enough to provide us with a licence to package this project.
 
 Check them out at: https://www.advancedinstaller.com/
