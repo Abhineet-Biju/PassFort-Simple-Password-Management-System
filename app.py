@@ -87,6 +87,8 @@ def add_entry():
         cursor.execute("SELECT * FROM cryptographykey")
         key = cursor.fetchmany()[0]
         #creating cryptography fernet obj
+
+        #**<Important: add custom characters beween the key to build a propreietary key which cannt be decrypted using the key in the db file>**
         fernetobj = Fernet(key[1])
 
         platform = fernetobj.encrypt(bytes(entry1.get(), 'utf8'))
@@ -419,7 +421,9 @@ def manager_window():
             cursor.execute("SELECT * FROM cryptographykey")
             key = cursor.fetchmany()[0]
             #creating cryptography fernet obj
-            fernetobj = Fernet(key[1])
+
+            #**<Important: add custom characters beween the key to build a propreietary key which cannt be decrypted using the key in the db file>**
+            fernetobj = Fernet(key[1]) 
 
             cursor.execute("SELECT * FROM vault")
             array = cursor.fetchall()

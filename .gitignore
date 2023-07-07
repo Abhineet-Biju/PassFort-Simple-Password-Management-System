@@ -3,3 +3,5 @@ backup.db
 venv
 main.exe
 .vs
+important.txt
+main_app.py
